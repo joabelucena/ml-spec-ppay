@@ -12,3 +12,7 @@ module "ingestion" {
 module "serving" {
   source = "./serving"
 }
+
+module "etl" {
+  source = "./etl"
+}
