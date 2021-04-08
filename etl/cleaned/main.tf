@@ -39,9 +39,14 @@ resource "aws_kinesis_firehose_delivery_stream" "cleaned_delivery_stream" {
 
 }
 
+data "archive_file" "source_file" {
+  type        = "zip"
+  source_file = "${path.module}/resources/lambda_function.py"
+  output_path = "${path.module}/resources/lambda_function.zip"
+}
 
 resource "aws_lambda_function" "lambda_cleaning" {
-  filename      = "ingestion/resources/lambda_function.zip"
+  filename      = data.archive_file.source_file.output_path
   function_name = "lambda_cleaning"
   role          = var.iam_lambda_role_arn
   handler       = "lambda_function.lambda_handler"
@@ -49,7 +54,7 @@ resource "aws_lambda_function" "lambda_cleaning" {
   # The filebase64sha256() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
-  source_code_hash = filebase64sha256("ingestion/resources/lambda_function.zip")
+  source_code_hash = filebase64sha256(data.archive_file.source_file.output_path)
 
   runtime = "python3.6"
 

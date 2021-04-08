@@ -4,11 +4,9 @@ provider "aws" {
     region = var.region
 }
 
-
 module "authorization" {
   source = "./authorization"
 }
-
 
 module "ingestion" {
   source = "./ingestion"
