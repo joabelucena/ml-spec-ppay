@@ -15,25 +15,6 @@ resource "aws_cloudwatch_event_target" "punk_api_call_target" {
 
 }
 
-
-resource "aws_iam_role" "iam_for_lambda" {
-  name = "iam_for_lambda"
-
-  assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": "sts:AssumeRole",
-        "Principal": {
-          "Service": "lambda.amazonaws.com"
-        },
-        "Effect": "Allow",
-        "Sid": ""
-      }
-    ]
-  })
-}
-
 # Layer creation
 resource "aws_lambda_layer_version" "lambda_layer" {
   filename   = "ingestion/resources/python.zip"
@@ -47,7 +28,7 @@ resource "aws_lambda_layer_version" "lambda_layer" {
 resource "aws_lambda_function" "test_lambda" {
   filename      = "ingestion/resources/lambda_function.zip"
   function_name = "lambda_function_name"
-  role          = aws_iam_role.iam_for_lambda.arn
+  role          = var.iam_lambda_role_arn
   handler       = "lambda_function.lambda_handler"
   layers = [ aws_lambda_layer_version.lambda_layer.arn ]
 
