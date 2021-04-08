@@ -11,7 +11,7 @@ resource "aws_cloudwatch_event_rule" "punk_api_call_rule" {
 resource "aws_cloudwatch_event_target" "punk_api_call_target" {
   target_id = "punk_api_call_target"
   rule      = aws_cloudwatch_event_rule.punk_api_call_rule.name
-  arn       = aws_lambda_function.test_lambda.arn
+  arn       = aws_lambda_function.punk_api_call.arn
 
 }
 
@@ -25,9 +25,9 @@ resource "aws_lambda_layer_version" "lambda_layer" {
 }
 
 # Lambda creation
-resource "aws_lambda_function" "test_lambda" {
+resource "aws_lambda_function" "punk_api_call" {
   filename      = "ingestion/resources/lambda_function.zip"
-  function_name = "lambda_function_name"
+  function_name = "lambda_punk_api_call"
   role          = var.iam_lambda_role_arn
   handler       = "lambda_function.lambda_handler"
   layers = [ aws_lambda_layer_version.lambda_layer.arn ]

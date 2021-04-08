@@ -31,3 +31,10 @@ module "cleaned_delivery" {
   iam_firehose_role_arn = module.authorization.output_iam_firehose_role
   iam_lambda_role_arn = module.authorization.output_iam_lambda_role
 }
+
+
+module "consume" {
+  source = "./consume"
+  iam_glue_role_arn = module.authorization.output_iam_glue_role
+  s3_bucket_path = module.cleaned_delivery.output_cleaned_bucket_path
+}

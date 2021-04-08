@@ -42,3 +42,27 @@ resource "aws_iam_role" "iam_lambda_role" {
     "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
   ]
 }
+
+
+# Role for Glue Crawler
+resource "aws_iam_role" "iam_glue_role" {
+  name = "iam_glue_role"
+  assume_role_policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": "sts:AssumeRole",
+        "Principal": {
+          "Service": "glue.amazonaws.com"
+        },
+        "Effect": "Allow",
+        "Sid": ""
+      }
+    ]
+  })
+
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole",
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  ]
+}
