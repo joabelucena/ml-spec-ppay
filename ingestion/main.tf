@@ -2,16 +2,18 @@
 # Cloud watch event creation
 resource "aws_cloudwatch_event_rule" "punk_api_call_rule" {
   name        = "punk_api_call_rule"
-  description = "Capture each AWS Console Sign In"
-  is_enabled = false
+  description = "Trggers the Lambda function responsible for starting the process."
+  is_enabled = true
 
-  schedule_expression = "rate(5 minutes)"
+  
+  schedule_expression = "rate(1 minute)"
 }
 
 resource "aws_cloudwatch_event_target" "punk_api_call_target" {
   target_id = "punk_api_call_target"
   rule      = aws_cloudwatch_event_rule.punk_api_call_rule.name
   arn       = aws_lambda_function.punk_api_call.arn
+  
 
 }
 

@@ -1,7 +1,8 @@
 # Criacao do bucket
 resource "aws_s3_bucket" "cleaned_bucket" {
-  bucket = "picpay-cleaned-bucket"
-  acl    = "private"
+  bucket        = "picpay-cleaned-bucket"
+  acl           = "private"
+  force_destroy = true
 
   tags = {
     Name        = "My bucket"
@@ -15,8 +16,12 @@ resource "aws_kinesis_firehose_delivery_stream" "cleaned_delivery_stream" {
   destination = "extended_s3"
 
   extended_s3_configuration {
-    role_arn   = var.iam_firehose_role_arn
-    bucket_arn = aws_s3_bucket.cleaned_bucket.arn
+    role_arn            = var.iam_firehose_role_arn
+    bucket_arn          = aws_s3_bucket.cleaned_bucket.arn
+    buffer_size         = 1
+    buffer_interval     = 60
+    prefix              = "tb_cleaned/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/"
+    error_output_prefix = "fherroroutputbase/!{firehose:random-string}/!{firehose:error-output-type}/!{timestamp:yyyy/MM/dd}/"
 
     processing_configuration {
       enabled = "true"

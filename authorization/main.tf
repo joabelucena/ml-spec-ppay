@@ -17,7 +17,9 @@ resource "aws_iam_role" "iam_firehose_role" {
   
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonKinesisFullAccess",
-    "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+    "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
   ]
 }
 
@@ -39,7 +41,8 @@ resource "aws_iam_role" "iam_lambda_role" {
   })
 
   managed_policy_arns = [
-    "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+    "arn:aws:iam::aws:policy/AmazonKinesisFullAccess",
+    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
   ]
 }
 
@@ -63,6 +66,7 @@ resource "aws_iam_role" "iam_glue_role" {
 
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole",
-    "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
   ]
 }
