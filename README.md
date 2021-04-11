@@ -5,7 +5,7 @@ This repository provides the code for deploying a data pipeline using AWS. This 
 
 Now you have two options:
 - Continue reading this awesome README (just keep scrolling);
-- [Screw that sh*t, I just want to run this](##Instructions)
+- [Screw that sh*t, I just want to run this](#instructions)
 
 
 
