@@ -103,7 +103,8 @@ This application starts several services on AWS and some access are required for
 - Account alias querying not working, so `account_alias` and `account_id` were hardcoded;
 - IAM role definition could be better, however, the time wasn't enough to get this section better. So other aspects were priorized like code organization and better framework usage;
 - Python lambda layer dependency manual generation/versioning. For automating this section both 'zip' and 'python' function would be required on a well known environment;
-- Stage layer is partitioned by firehose. Firehose defines UTC timestamp for partitioning, this may create non-truth partitioning.
+- Stage layer is partitioned by firehose. Firehose defines UTC timestamp for partitioning, this may create non-truth partitioning;
+- Model training could be better, some steps is missing like: decent data preparation and feature engineering. Also a quick search showed that ibu has some range classification. A classification model could be used instead a regression one deliverying more value to the business.
 
 ## References
 - Python documentation - https://www.python.org/dev/peps/pep-0257/
