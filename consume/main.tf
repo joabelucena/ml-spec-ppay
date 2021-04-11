@@ -1,13 +1,10 @@
-
-
 resource "aws_glue_catalog_database" "metastore" {
   name = "hive-metastore"
 }
 
-
 resource "aws_glue_crawler" "cleaned_crawler" {
   database_name = aws_glue_catalog_database.metastore.name
-  name          = "cleaned_crawler"
+  name          = "${var.parameter.account_alias}_cleaned-crawler_glue"
   role          = var.iam_glue_role_arn
 
   configuration = jsonencode(
@@ -22,6 +19,8 @@ resource "aws_glue_crawler" "cleaned_crawler" {
   s3_target {
     path = "s3://${var.s3_bucket_path}/tb_cleaned"
   }
+
+  tags = var.tags
 }
 
 
@@ -30,10 +29,7 @@ resource "aws_s3_bucket" "athena_stage" {
   acl           = "private"
   force_destroy = true
 
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
+  tags = var.tags
 }
 
 
@@ -45,7 +41,8 @@ resource "aws_athena_workgroup" "drunk_users" {
     publish_cloudwatch_metrics_enabled = true
 
     result_configuration {
-      output_location = "s3://${aws_s3_bucket.athena_stage.bucket}"      
+      output_location = "s3://${aws_s3_bucket.athena_stage.bucket}"
     }
   }
+  tags = var.tags
 }

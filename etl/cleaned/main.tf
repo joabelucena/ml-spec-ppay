@@ -4,15 +4,11 @@ resource "aws_s3_bucket" "cleaned_bucket" {
   acl           = "private"
   force_destroy = true
 
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
+  tags = var.tags
 }
 
-
 resource "aws_kinesis_firehose_delivery_stream" "cleaned_delivery_stream" {
-  name        = "cleaned_delivery_stream"
+  name        = "${var.parameter.account_alias}_cleaned-delivery_stream"
   destination = "extended_s3"
 
   extended_s3_configuration {
@@ -42,6 +38,7 @@ resource "aws_kinesis_firehose_delivery_stream" "cleaned_delivery_stream" {
     kinesis_stream_arn = var.kinesis_stream_arn
   }
 
+  tags = var.tags
 }
 
 data "archive_file" "source_file" {
@@ -51,21 +48,12 @@ data "archive_file" "source_file" {
 }
 
 resource "aws_lambda_function" "lambda_cleaning" {
-  filename      = data.archive_file.source_file.output_path
-  function_name = "lambda_cleaning"
-  role          = var.iam_lambda_role_arn
-  handler       = "lambda_function.lambda_handler"
-
-  # The filebase64sha256() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
-  # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
+  filename         = data.archive_file.source_file.output_path
+  function_name    = "${var.parameter.account_alias}_data-cleaning_lambda"
+  role             = var.iam_lambda_role_arn
+  handler          = "lambda_function.lambda_handler"
   source_code_hash = filebase64sha256(data.archive_file.source_file.output_path)
 
   runtime = "python3.6"
-
-  environment {
-    variables = {
-      foo = "bar"
-    }
-  }
+  tags    = var.tags
 }
