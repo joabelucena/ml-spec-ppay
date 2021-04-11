@@ -5,7 +5,7 @@ This repository provides the code for deploying a data pipeline using AWS. This 
 
 Now you have two options:
 - Continue reading this awesome README (just keep scrolling);
-- [Screw that sh*t, I just want to run this](#instructions)
+- [Screw that sh*t, I just want to run this](##Instructions)
 
 
 
@@ -88,6 +88,17 @@ A valid `.tfvars` file should look something like:
     access_key="<your_access_key_here>"
     secret_key="<your_access_key_here>"
 
+### Required access
+This application starts several services on AWS and some access are required for the user to have. Those access are listed bellow:
+- IAMFullAccess
+- AmazonS3FullAccess
+- AmazonAthenaFullAccess
+- AmazonKinesisFullAccess
+- AmazonKinesisFirehoseFullAccess
+- AWSGlueConsoleFullAccess
+- CloudWatchEventsFullAccess
+- AWSLambda_FullAccess
+
 ### Known bugs and needed improvements
 - Account alias querying not working, so `account_alias` and `account_id` were hardcoded;
 - IAM role definition could be better, however, the time wasn't enough to get this section better. So other aspects were priorized like code organization and better framework usage;
@@ -99,3 +110,5 @@ A valid `.tfvars` file should look something like:
 - AWS Naming Convention: https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/other-aws-resource-types.html
 - Cost allocation tagging: https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/best-practices-for-cost-allocation-tags.html
 - Terraform structure best practices - https://www.terraform.io/docs/language/modules/develop/structure.html
+
+
