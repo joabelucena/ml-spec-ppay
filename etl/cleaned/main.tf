@@ -52,7 +52,6 @@ resource "aws_lambda_function" "lambda_cleaning" {
   function_name    = "${var.parameter.account_alias}_data-cleaning_lambda"
   role             = var.iam_lambda_role_arn
   handler          = "lambda_function.lambda_handler"
-  source_code_hash = filebase64sha256(data.archive_file.source_file.output_path)
 
   runtime = "python3.6"
   tags    = var.tags

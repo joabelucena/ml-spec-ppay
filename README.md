@@ -88,14 +88,28 @@ A valid `.tfvars` file should look something like:
     access_key="<your_access_key_here>"
     secret_key="<your_access_key_here>"
 
+### Required access
+This application starts several services on AWS and some access are required for the user to have. Those access are listed bellow:
+- IAMFullAccess
+- AmazonS3FullAccess
+- AmazonAthenaFullAccess
+- AmazonKinesisFullAccess
+- AmazonKinesisFirehoseFullAccess
+- AWSGlueConsoleFullAccess
+- CloudWatchEventsFullAccess
+- AWSLambda_FullAccess
+
 ### Known bugs and needed improvements
 - Account alias querying not working, so `account_alias` and `account_id` were hardcoded;
 - IAM role definition could be better, however, the time wasn't enough to get this section better. So other aspects were priorized like code organization and better framework usage;
 - Python lambda layer dependency manual generation/versioning. For automating this section both 'zip' and 'python' function would be required on a well known environment;
-- Stage layer is partitioned by firehose. Firehose defines UTC timestamp for partitioning, this may create non-truth partitioning.
+- Stage layer is partitioned by firehose. Firehose defines UTC timestamp for partitioning, this may create non-truth partitioning;
+- Model training could be better, some steps is missing like: decent data preparation and feature engineering. Also a quick search showed that ibu has some range classification. A classification model could be used instead a regression one deliverying more value to the business.
 
 ## References
 - Python documentation - https://www.python.org/dev/peps/pep-0257/
 - AWS Naming Convention: https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/other-aws-resource-types.html
 - Cost allocation tagging: https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/best-practices-for-cost-allocation-tags.html
 - Terraform structure best practices - https://www.terraform.io/docs/language/modules/develop/structure.html
+
+
