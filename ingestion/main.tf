@@ -36,7 +36,6 @@ resource "aws_lambda_function" "punk_api_call" {
   handler          = "lambda_function.lambda_handler"
   layers           = [aws_lambda_layer_version.lambda_layer.arn]
   tags             = var.tags
-  source_code_hash = filebase64sha256(data.archive_file.source_file.output_path)
 
   runtime = "python3.6"
 
