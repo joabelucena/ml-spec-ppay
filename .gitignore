@@ -6,3 +6,7 @@ env/
 
 # AWS Security Keys
 aws-keys.*
+
+# ZIP files
+*.zip
+!python.zip
