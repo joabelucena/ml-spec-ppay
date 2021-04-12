@@ -1,4 +1,4 @@
-# Machine Learning Specialist Test - PicPay
+# AWS Data Pipeline
 
 ## Introduction
 This repository provides the code for deploying a data pipeline using AWS. This data pipeline consists on triggering a Lambda function that calls an API which provides random generated data. These data are forwarded then for a Kinesis Stream which serves two Firehose Delivery Streams. One of these, delivery raw data on a S3 bucket. The other one extracts certain fields then delivery those also on S3 but in a separated bucket.
