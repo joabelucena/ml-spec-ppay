@@ -107,9 +107,9 @@ This application starts several services on AWS and some access are required for
 - Model training could be better, some steps is missing like: decent data preparation and feature engineering. Also a quick search showed that ibu has some range classification. A classification model could be used instead a regression one deliverying more value to the business.
 
 ## References
-- Python documentation - https://www.python.org/dev/peps/pep-0257/
+- Python documentation: https://www.python.org/dev/peps/pep-0257/
 - AWS Naming Convention: https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/other-aws-resource-types.html
 - Cost allocation tagging: https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/best-practices-for-cost-allocation-tags.html
-- Terraform structure best practices - https://www.terraform.io/docs/language/modules/develop/structure.html
+- Terraform structure best practices: https://www.terraform.io/docs/language/modules/develop/structure.html
 
 
